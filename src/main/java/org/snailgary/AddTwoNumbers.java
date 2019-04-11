@@ -4,12 +4,15 @@ import java.util.StringJoiner;
 
 public class AddTwoNumbers {
 
+    private static int current = 0;
+    
+    private static ListNode listNode0 = new ListNode(0);
+
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
 
         ListNode temp = l1;
         ListNode temp2 = l2;
 
-        ListNode current = null;
         ListNode finalTemp = null;
         ListNode finalListNode = null;
 
@@ -17,20 +20,19 @@ public class AddTwoNumbers {
             //System.out.println(temp.val);
             //System.out.println(temp2.val);
             if (temp == null) {
-                temp = new ListNode(0);
+                temp = listNode0;
             }
             if (temp2 == null) {
-                temp2 = new ListNode(0);
+                temp2 = listNode0;
             }
             int result = temp.val + temp2.val;
 
-            if (current != null) {
+            if (current == 1) {
                 result = result + 1;
-                current = null;
+                current = 0;
             }
-
+            ListNode listNode6 = null;
             if (finalListNode == null) {
-                ListNode listNode6 = null;
                 if (result >= 10) {
                     listNode6 = new ListNode(result - 10);
                 } else {
@@ -40,14 +42,15 @@ public class AddTwoNumbers {
                 finalTemp = listNode6;
             } else {
                 if (result >= 10) {
-                    finalListNode.next = new ListNode(result - 10);
+                    listNode6 = new ListNode(result - 10);
                 } else {
-                    finalListNode.next = new ListNode(result);
+                    listNode6 = new ListNode(result);
                 }
+                finalListNode.next = listNode6;
                 finalListNode = finalListNode.next;
             }
             if (result >= 10) {
-                current = new ListNode(1);
+                current = 1;
             }
 
             if (temp.next != null) {
@@ -61,8 +64,8 @@ public class AddTwoNumbers {
                 temp2 = null;
             }
 
-            if (temp == null && temp2 == null && current != null) {
-                temp = new ListNode(0);
+            if (temp == null && temp2 == null && current == 1) {
+                temp = listNode0;
             }
 
         }
