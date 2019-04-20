@@ -45,12 +45,16 @@ public class LongestPalindrome {
         for (int i = 0; i < s.length() - 1; i++) {
 
             int j = s.length() - 1;
+
+           /* if ((j-i+1) < current.length() ) {
+                return current;
+            }*/
+
             w: while (i < j) {
                 if (current.length() == s.length()) {
                     return s;
                 }
                 if (s.charAt(i) == s.charAt(j) && (j-i+1) >= current.length()) {
-                    //String palindrome = palindrome(i, j, s);
 
                     boolean isPalindrome = isPalindrome(i, j, s);
 
@@ -61,10 +65,6 @@ public class LongestPalindrome {
                         }
                         current = stringBuilder.toString();
                     }
-
-                  /*  if (palindrome.length() > 0 && palindrome.length() >= current.length()) {
-                        current = palindrome;
-                    }*/
 
                 }
                 j--;
@@ -88,7 +88,7 @@ public class LongestPalindrome {
             int left = start;
             int right = end;
             w:
-            while (left < right) {
+            while (left < right ) {
 
                 if (s.charAt(left) != s.charAt(right)) {
                     isPalindrome = false;
@@ -119,6 +119,30 @@ public class LongestPalindrome {
         }
 
         return isPalindrome;
+    }
+
+    public String longestPalindromeOfficial(String s) {
+        if (s == null || s.length() < 1) return "";
+        int start = 0, end = 0;
+        for (int i = 0; i < s.length(); i++) {
+            int len1 = expandAroundCenter(s, i, i);
+            int len2 = expandAroundCenter(s, i, i + 1);
+            int len = Math.max(len1, len2);
+            if (len > end - start) {
+                start = i - (len - 1) / 2;
+                end = i + len / 2;
+            }
+        }
+        return s.substring(start, end + 1);
+    }
+
+    private int expandAroundCenter(String s, int left, int right) {
+        int L = left, R = right;
+        while (L >= 0 && R < s.length() && s.charAt(L) == s.charAt(R)) {
+            L--;
+            R++;
+        }
+        return R - L - 1;
     }
 
 
@@ -191,6 +215,25 @@ public class LongestPalindrome {
         }
 
         return "";
+    }
+
+    @Test
+    public void testReverse() {
+        StringBuilder stringBuilder = new StringBuilder();
+        String s = "abcba";
+        stringBuilder.append(s);
+        System.out.println(stringBuilder.reverse());
+        int start = 0;
+        int end = 4;
+        int length = s.length();
+        int modularTwo = length%2;
+        if (modularTwo == 0) {
+
+        }else {
+
+
+        }
+
     }
 
     @Test
