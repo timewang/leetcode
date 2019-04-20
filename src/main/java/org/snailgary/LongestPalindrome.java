@@ -17,23 +17,108 @@ public class LongestPalindrome {
         for (int i = 0; i < s.length() - 1; i++) {
 
             int j = s.length() - 1;
-            while (i < j) {
-                if (s.charAt(i) == s.charAt(j) && (j-i+1) > current.length()) {
+            w: while (i < j) {
+                if (current.length() == s.length()) {
+                    return s;
+                }
+                if (s.charAt(i) == s.charAt(j) && (j-i+1) >= current.length()) {
                     String palindrome = palindrome(i, j, s);
-                    if (palindrome.length() == s.length()) {
-                        return s;
-                    }
                     if (palindrome.length() > 0 && palindrome.length() >= current.length()) {
                         current = palindrome;
                     }
+
                 }
                 j--;
             }
 
         }
 
+        return current;
+    }
+
+    public String longestPalindrome1(String s) {
+        if (s.length() == 0) {
+            return "";
+        }
+        String current = s.charAt(0) + "";
+
+        for (int i = 0; i < s.length() - 1; i++) {
+
+            int j = s.length() - 1;
+            w: while (i < j) {
+                if (current.length() == s.length()) {
+                    return s;
+                }
+                if (s.charAt(i) == s.charAt(j) && (j-i+1) >= current.length()) {
+                    //String palindrome = palindrome(i, j, s);
+
+                    boolean isPalindrome = isPalindrome(i, j, s);
+
+                    if (isPalindrome) {
+                        StringBuilder stringBuilder = new StringBuilder();
+                        for (int start = i; start <= j; start++) {
+                            stringBuilder.append(s.charAt(start));
+                        }
+                        current = stringBuilder.toString();
+                    }
+
+                  /*  if (palindrome.length() > 0 && palindrome.length() >= current.length()) {
+                        current = palindrome;
+                    }*/
+
+                }
+                j--;
+            }
+
+        }
 
         return current;
+    }
+
+    public boolean isPalindrome(int start, int end, String s) {
+        int length = (end - start) + 1;
+        if (length == 2 || length == 3) {
+            return s.charAt(start) == s.charAt(end);
+        }
+        int m = length % 2;
+
+        boolean isPalindrome = true;
+        if (m == 0) {
+
+            int left = start;
+            int right = end;
+            w:
+            while (left < right) {
+
+                if (s.charAt(left) != s.charAt(right)) {
+                    isPalindrome = false;
+                    break w;
+                }
+                left++;
+                right--;
+            }
+
+        } else if (m == 1) {
+            int middle = length / 2 + start;
+
+            int left = start;
+            int right = end;
+
+            w:
+            while (left < middle && right > middle) {
+                if (s.charAt(left) != s.charAt(right)) {
+                    isPalindrome = false;
+                    break w;
+                }
+
+                left++;
+                right--;
+
+            }
+
+        }
+
+        return isPalindrome;
     }
 
 
@@ -112,7 +197,8 @@ public class LongestPalindrome {
     public void result() {
         //System.out.println(isCharEqual);
         long start = System.currentTimeMillis();
-        String s = longestPalindrome("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        //String s = longestPalindrome("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        String s = longestPalindrome("babad");
         System.out.println(s);
         System.out.println(s.length());
         System.out.println(System.currentTimeMillis() - start);
