@@ -6,6 +6,7 @@ import java.util.*;
 
 public class LongestPalindrome {
 
+    //Map<String, Boolean> isCharEqual = new HashMap<>();
 
     public String longestPalindrome(String s) {
         if (s.length() == 0) {
@@ -17,9 +18,14 @@ public class LongestPalindrome {
 
             int j = s.length() - 1;
             while (i < j) {
-                String palindrome = palindrome(i, j, s);
-                if (palindrome.length() > 0 && palindrome.length() >= current.length()) {
-                    current = palindrome;
+                if (s.charAt(i) == s.charAt(j) && (j-i+1) > current.length()) {
+                    String palindrome = palindrome(i, j, s);
+                    if (palindrome.length() == s.length()) {
+                        return s;
+                    }
+                    if (palindrome.length() > 0 && palindrome.length() >= current.length()) {
+                        current = palindrome;
+                    }
                 }
                 j--;
             }
@@ -27,73 +33,89 @@ public class LongestPalindrome {
         }
 
 
-
         return current;
     }
 
+
     public String palindrome(int start, int end, String s) {
-        if (isPalindrome(start, end, s)) {
-            StringBuilder stringBuilder = new StringBuilder();
-            for (int i = start; i <= end; i++) {
 
-                stringBuilder.append(s.charAt(i));
-
-            }
-            return stringBuilder.toString();
-        }
-        return "";
-    }
-
-
-
-    public boolean isPalindrome(int start, int end, String s) {
-        int length = (end - start) + 1 ;
+        int length = (end - start) + 1;
         if (length == 2) {
-            return s.charAt(start) == s.charAt(end);
+            //return s.charAt(start) == s.charAt(end);
+            if (s.charAt(start) == s.charAt(end)) {
+                return s.charAt(start) + "" + s.charAt(end) + "";
+            }
         }
         if (length == 3) {
-            return s.charAt(start) == s.charAt(end);
+            if (s.charAt(start) == s.charAt(end)) {
+                return s.charAt(start) + "" + s.charAt(end - 1) + "" + s.charAt(end) + "";
+            }
         }
 
-
+        StringBuilder leftString = new StringBuilder();
+        StringBuilder rightString = new StringBuilder();
         int m = length % 2;
+
         boolean isPalindrome = true;
         if (m == 0) {
 
             int left = start;
             int right = end;
-            w: while(left < right){
+            int meiddleIndex = length/2 + start;
+            w:
+            while (left < right && meiddleIndex <= end) {
 
                 if (s.charAt(left) != s.charAt(right)) {
                     isPalindrome = false;
                     break w;
                 }
-                left++;right--;
+                leftString.append(s.charAt(left));
+                rightString.append(s.charAt(meiddleIndex));
+                left++;
+                meiddleIndex++;
+                right--;
             }
 
-        }else if(m == 1){
+        } else if (m == 1) {
             int middle = length / 2 + start;
 
             int left = start;
             int right = end;
-            w: while (left < middle && right > middle) {
+            int meiddleIndex = length/2 + start;
 
+            w:
+            while (left < middle && right > middle) {
                 if (s.charAt(left) != s.charAt(right)) {
                     isPalindrome = false;
                     break w;
                 }
-                left++;right--;
+                leftString.append(s.charAt(left));
+                rightString.append(s.charAt(meiddleIndex));
+                left++;
+                meiddleIndex++;
+                right--;
 
             }
+            //leftString.append(s.charAt(middle));
+            rightString.append(s.charAt(end));
 
         }
 
-        return isPalindrome;
+        if (isPalindrome) {
+            return leftString.toString() + rightString.toString();
+        }
+
+        return "";
     }
 
     @Test
     public void result() {
-        System.out.println(longestPalindrome("bananas"));
+        //System.out.println(isCharEqual);
+        long start = System.currentTimeMillis();
+        String s = longestPalindrome("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        System.out.println(s);
+        System.out.println(s.length());
+        System.out.println(System.currentTimeMillis() - start);
     }
 
     @Test
@@ -104,8 +126,8 @@ public class LongestPalindrome {
         int[] minAndMaxIndex = new int[2];
         int middle;
         if (s.length() % 2 == 0) {
-            middle = s.length() / 2 -1;
-        }else {
+            middle = s.length() / 2 - 1;
+        } else {
             middle = s.length() / 2;
         }
 
@@ -121,7 +143,6 @@ public class LongestPalindrome {
                         //characters.
                     }
                 }
-
 
 
             }
