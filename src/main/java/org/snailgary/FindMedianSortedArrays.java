@@ -4,6 +4,10 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
+/**
+ * https://leetcode-cn.com/problems/median-of-two-sorted-arrays/
+ *  寻找两个正序数组的中位数
+ */
 public class FindMedianSortedArrays {
 
 

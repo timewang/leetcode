@@ -4,6 +4,10 @@ import org.junit.Test;
 
 import java.util.*;
 
+/**
+ * https://leetcode-cn.com/problems/longest-palindromic-substring/
+ * 最长回文子串
+ */
 public class LongestPalindrome {
 
     //Map<String, Boolean> isCharEqual = new HashMap<>();

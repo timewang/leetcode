@@ -6,6 +6,7 @@ import java.util.Set;
 
 /**
  * 此版本会内存溢出
+ * 无重复字符的最长子串
  */
 public class LengthOfLongestSubstring {
 

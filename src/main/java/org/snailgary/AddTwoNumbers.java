@@ -2,6 +2,10 @@ package org.snailgary;
 
 import java.util.StringJoiner;
 
+/**
+ * https://leetcode-cn.com/problems/add-two-numbers/
+ * 两数相加
+ */
 public class AddTwoNumbers {
 
     private static int current = 0;
@@ -25,6 +29,7 @@ public class AddTwoNumbers {
             if (temp2 == null) {
                 temp2 = listNode0;
             }
+            // 求头节点的和
             int result = temp.val + temp2.val;
 
             if (current == 1) {
@@ -33,6 +38,7 @@ public class AddTwoNumbers {
             }
             ListNode listNode6 = null;
             if (finalListNode == null) {
+                // 大于10 只取-10的余数
                 if (result >= 10) {
                     listNode6 = new ListNode(result - 10);
                 } else {
