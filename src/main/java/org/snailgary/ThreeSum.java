@@ -1,10 +1,12 @@
 package org.snailgary;
 
 import org.junit.Test;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import java.util.*;
 
+/**
+ * https://leetcode-cn.com/problems/3sum/
+ */
 public class ThreeSum {
 
     /**
